@@ -14,7 +14,7 @@ public class PlayerTestingControls : MonoBehaviour
     {
         if (PressH.WasPerformedThisFrame())
         {
-            Player.GetComponent<PlayerLevel>().gainXp(50f);
+            Player.GetComponent<PlayerHealthScript>().ChangeHealth(-50);
         }
     }
 }

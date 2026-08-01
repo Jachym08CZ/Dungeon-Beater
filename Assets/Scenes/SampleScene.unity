@@ -2589,6 +2589,8 @@ GameObject:
   - component: {fileID: 2098941830}
   - component: {fileID: 2098941829}
   - component: {fileID: 2098941831}
+  - component: {fileID: 2098941833}
+  - component: {fileID: 2098941832}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2780,14 +2782,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ef881089a148c54eaac47f041f71042, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
-  health: 100
-  maxHealth: 100
-  healthBar: {fileID: 456899578}
   stamina: 100
   maxStamina: 100
   mana: 10
   maxMana: 10
-  manaBar: {fileID: 513271284}
   coins: 0
 --- !u!114 &2098941829
 MonoBehaviour:
@@ -2802,11 +2800,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerLevel
   xp: 0
-  maxXpText: {fileID: 641357268}
-  xpText: {fileID: 2095771160}
-  xpBar: {fileID: 531047382}
+  maxXp: 100
   level: 1
-  levelText: {fileID: 612884199}
 --- !u!114 &2098941830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2833,6 +2828,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f44f08609534e324db6ae36b8b2b211f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerTestingControls
+--- !u!114 &2098941832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2098941819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efb6e6ec71482374c86fe17263626ff3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerUi
+  MaxXpText: {fileID: 641357268}
+  XpText: {fileID: 2095771160}
+  XpBar: {fileID: 531047382}
+  levelText: {fileID: 612884199}
+  HealthSlider: {fileID: 456899578}
+  playerLevel: {fileID: 2098941829}
+  baseHealth: {fileID: 2098941833}
+--- !u!114 &2098941833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2098941819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0a40e3431c307641a57414f5d3f9c5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealthScript
+  CurrenthHealth: 0
+  MaxHealth: 100
 --- !u!1 &2120137173
 GameObject:
   m_ObjectHideFlags: 0

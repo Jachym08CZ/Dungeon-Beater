@@ -55,6 +55,6 @@ public class EnemyScript : MonoBehaviour
 
     void Attack(int dmg)
     {
-        player.transform.gameObject.GetComponent<PlayerHealthScript>().TakeDamage(dmg);
+        player.transform.gameObject.GetComponent<PlayerHealthScript>().ChangeHealth(dmg);
     }
 }

@@ -1,12 +1,10 @@
+using System;
 using System.Collections;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+
 
 public class PlayerHealthScript  : BaseHealthScript
 {
-    private Rigidbody rb;
 
     private Coroutine deathCor;
     public override void Start()
@@ -15,13 +13,9 @@ public class PlayerHealthScript  : BaseHealthScript
 
     }
 
-    public override void Update()
+    public override void ChangeHealth(int dmg)
     {
-        base.Update();
-    }
-    public override void TakeDamage(int dmg)
-    {
-        base.RemoveHealth(dmg);
+        base.ChangeHealth(dmg);
     }
     public override void OnDeath()
     {
