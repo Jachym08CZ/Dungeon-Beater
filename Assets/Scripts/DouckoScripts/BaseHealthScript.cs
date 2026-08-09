@@ -19,6 +19,7 @@ public class BaseHealthScript : MonoBehaviour, IDamageable
     public virtual void OnDeath()
     {
         //DeathAction.Invoke();
+        Debug.Log("Death");
     }
 
     public virtual void ChangeHealth(int dmg)

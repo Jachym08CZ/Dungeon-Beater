@@ -14,7 +14,7 @@ public class PlayerTestingControls : MonoBehaviour
     {
         if (PressH.WasPerformedThisFrame())
         {
-            Player.GetComponent<PlayerHealthScript>().ChangeHealth(-50);
+            //Player.GetComponent<PlayerHealthScript>().ChangeHealth(-50);
         }
     }
 }

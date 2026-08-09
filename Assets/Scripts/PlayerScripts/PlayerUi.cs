@@ -16,14 +16,23 @@ public class PlayerUi : MonoBehaviour
     [Header("Health")]
     public Slider HealthSlider;
 
+    [Header("Stamina")]
+    public Slider StaminaSlider;
+
+    [Header("Stamina")]
+    public Slider ManaSlider;
+
     [SerializeField] private PlayerLevel playerLevel;
     [SerializeField] private BaseHealthScript baseHealth;
+    [SerializeField] private PlayerStats playerstats;
 
     private void Start()
     {
         playerLevel.OnXpChange += RefreshXp;
         playerLevel.OnLeveLUp += RefreshLevel;
         baseHealth.OnHealthChange += RefreshHealth;
+        playerstats.OnStaminaChanged += RefreshStamina;
+        playerstats.OnManaChanged += RefreshMana;
     }
     private void RefreshXp()
     {
@@ -42,5 +51,16 @@ public class PlayerUi : MonoBehaviour
     {
         HealthSlider.value = baseHealth.CurrenthHealth;
         HealthSlider.maxValue = baseHealth.MaxHealth;
+    }
+    
+    private void RefreshStamina()
+    {
+        StaminaSlider.value = playerstats.stamina;
+        StaminaSlider.maxValue = playerstats.maxStamina;
+    }
+    private void RefreshMana()
+    {
+        ManaSlider.value = playerstats.Mana;
+        ManaSlider.maxValue = playerstats.maxMana;
     }
 }
