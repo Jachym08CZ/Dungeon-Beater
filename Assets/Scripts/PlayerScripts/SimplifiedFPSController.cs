@@ -78,11 +78,10 @@ public class SimplifiedFPSController : MonoBehaviour
         {
             _velocity.y = -groundedStickForce;
 
-            if (_jumpAction.WasPerformedThisFrame())
+            if (_jumpAction.WasPerformedThisFrame() && playerstats.DrainStamina(120f * Time.deltaTime))
             {
                 if (playerstats.stamina > 5)
                 _velocity.y = jumpSpeed;
-                playerstats.DrainStamina(5);
             }
         }
         else
@@ -90,10 +89,10 @@ public class SimplifiedFPSController : MonoBehaviour
             _velocity.y -= gravity * Time.deltaTime;
         }
 
-        if (_sprintAction.IsPressed() && _moveAction.IsPressed())
-        {   if (playerstats.stamina > 1)
+        if (_sprintAction.IsPressed() && _moveAction.IsPressed() && playerstats.DrainStamina(15f * Time.deltaTime))
+        {   
+            if (playerstats.stamina > 1)
             moveSpeed = 12;
-            playerstats.DrainStamina(0.5f);
         }
         else
         {
