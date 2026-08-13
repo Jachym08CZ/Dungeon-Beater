@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 
@@ -9,9 +10,9 @@ public class PlayerStats : MonoBehaviour
 
     public float stamina = 100f;
     public float maxStamina = 100f;
-    public bool IsDrained = false;
-
+    public bool StaminaIsdrained;
     public event Action OnStaminaChanged;
+    public IEnumerator coroutine;
 
     [Header("Magic")]
 
@@ -24,27 +25,47 @@ public class PlayerStats : MonoBehaviour
     public event Action OnCoinsChanged;
     private void Start()
     {
+        StaminaIsdrained = false;
     }
 
     private void Update()
     {
-        if (IsDrained == false)
+        if (StaminaIsdrained == false)
         {
-            AddStamina(0.25f);
+            AddStamina(0.5f);
         }
-    }
 
-    public void DrainStamina(float ammount)
+    }
+    private void LateUpdate()
     {
-        if (stamina <= ammount) return;
+        if (StaminaIsdrained == true)
+        {
+            StartCoroutine(replenishStamina(3));
+        }
+
+
+    }
+    public bool DrainStamina(float ammount)
+    {
+        if (stamina <= ammount || stamina <= 0) return false; 
+
         stamina -= ammount;
         OnStaminaChanged.Invoke();
+        StopAllCoroutines();
+        StaminaIsdrained = true;
+        return true;
     }
     public void AddStamina(float ammount)
     {
         if (stamina >= maxStamina) return;
         stamina += ammount;
         OnStaminaChanged.Invoke();
+    }
+
+    public IEnumerator replenishStamina(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        StaminaIsdrained = false;
     }
 
     public void DrainMana(float ammount)
@@ -62,7 +83,7 @@ public class PlayerStats : MonoBehaviour
     public void ChangeCoins(int ammount)
     {
         Coins += ammount;
-        OnCoinsChanged.Invoke();
+        //OnCoinsChanged.Invoke();
 
     }
 }

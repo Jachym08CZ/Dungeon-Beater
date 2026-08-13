@@ -1,19 +1,17 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyScript : MonoBehaviour, IDamageable
+public class EnemyScript : MonoBehaviour
 {
     NavMeshAgent agent;
     GameObject player;
 
-    public float Health;
-    public float MaxHealth;
     // attack 
     public int Dmg = 10;
     public float Couldown = 1.5F;
     bool alreadyAttacked;
 
-    public LayerMask WhatIsGround, WhatIsPlayer;
+    public LayerMask WhatIsPlayer;
     
     // Patrol Points
     public Transform[] points;
@@ -29,7 +27,6 @@ public class EnemyScript : MonoBehaviour, IDamageable
         player = GameObject.FindWithTag("Player");
 
         Patrol();
-        Health = MaxHealth;
     }
     private void Update()
     {
@@ -68,9 +65,5 @@ public class EnemyScript : MonoBehaviour, IDamageable
     private void ResetAttack()
     {
         alreadyAttacked = false;
-    }
-    public void ChangeHealth(int dmg)
-    {
-        throw new System.NotImplementedException();
     }
 }

@@ -600,6 +600,8 @@ GameObject:
   - component: {fileID: 272423629}
   - component: {fileID: 272423628}
   - component: {fileID: 272423633}
+  - component: {fileID: 272423634}
+  - component: {fileID: 272423635}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -736,13 +738,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717f896353b52df4cbfb33ebc687e62e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyScript
-  Health: 0
-  MaxHealth: 100
   Dmg: 10
   Couldown: 1.5
-  WhatIsGround:
-    serializedVersion: 2
-    m_Bits: 64
   WhatIsPlayer:
     serializedVersion: 2
     m_Bits: 128
@@ -755,6 +752,33 @@ MonoBehaviour:
   attackRange: 1
   playerInSightRange: 0
   playerInAttackRange: 0
+--- !u!114 &272423634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272423627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d01f50d91b77c845a305f0a3a44283c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  CurrenthHealth: 0
+  MaxHealth: 100
+--- !u!114 &272423635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272423627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de9ca8c65eae9e4cad94023563af8b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerRewardSystem
+  player: {fileID: 2098941819}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -3317,7 +3341,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
   stamina: 100
   maxStamina: 100
-  IsDrained: 0
+  StaminaIsdrained: 0
   Mana: 10
   maxMana: 10
   Coins: 0

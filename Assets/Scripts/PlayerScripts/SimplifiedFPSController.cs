@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -78,14 +79,10 @@ public class SimplifiedFPSController : MonoBehaviour
             _velocity.y = -groundedStickForce;
 
             if (_jumpAction.WasPerformedThisFrame())
-            { 
+            {
+                if (playerstats.stamina > 5)
                 _velocity.y = jumpSpeed;
                 playerstats.DrainStamina(5);
-                playerstats.IsDrained = true;
-            }
-            else
-            {
-                playerstats.IsDrained = false;
             }
         }
         else
@@ -93,15 +90,13 @@ public class SimplifiedFPSController : MonoBehaviour
             _velocity.y -= gravity * Time.deltaTime;
         }
 
-        if (_sprintAction.IsPressed())
-        {
+        if (_sprintAction.IsPressed() && _moveAction.IsPressed())
+        {   if (playerstats.stamina > 1)
             moveSpeed = 12;
             playerstats.DrainStamina(0.5f);
-            playerstats.IsDrained = true;
         }
         else
         {
-            playerstats.IsDrained = false;
             moveSpeed = 6;
         }
         Vector3 finalVelocity = new Vector3(move.x, _velocity.y, move.z);

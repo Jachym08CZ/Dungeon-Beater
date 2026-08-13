@@ -16,6 +16,13 @@ public class BaseHealthScript : MonoBehaviour, IDamageable
         //DeathAction += GameManager.Instance.Restart;
     }
 
+    public virtual void Update()
+    {
+        if (CurrenthHealth <= 0)
+        {
+            OnDeath();
+        }
+    }
     public virtual void OnDeath()
     {
         //DeathAction.Invoke();
