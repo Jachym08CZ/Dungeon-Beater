@@ -7,7 +7,7 @@ public class BaseHealthScript : MonoBehaviour, IDamageable
     public float CurrenthHealth;
     public float MaxHealth = 100;
 
-    //public event Action DeathAction;
+    public event Action DeathAction;
     public event Action OnHealthChange;
     public virtual void Start()
     {
@@ -25,13 +25,13 @@ public class BaseHealthScript : MonoBehaviour, IDamageable
     }
     public virtual void OnDeath()
     {
-        //DeathAction.Invoke();
+        DeathAction.Invoke();
         Debug.Log("Death");
     }
 
     public virtual void ChangeHealth(int dmg)
     {
         CurrenthHealth += dmg;
-        OnHealthChange.Invoke();
+        OnHealthChange?.Invoke();
     }
 }

@@ -7,6 +7,9 @@ public class SimplifiedFPSController : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed = 6f;
+    public float SprintSpeed = 12;
+    private float currentSpeed;
+
     public float jumpSpeed = 8f;
     public float gravity = 20f;
     public float groundedStickForce = 2f;
@@ -71,16 +74,14 @@ public class SimplifiedFPSController : MonoBehaviour
 
         // --- MOVE ---
         Vector2 moveInput = _moveAction.ReadValue<Vector2>();
-        Vector3 move = (transform.right * moveInput.x + transform.forward * moveInput.y) * moveSpeed;
 
         // --- GRAVITY + JUMP ---
         if (_cc.isGrounded)
         {
             _velocity.y = -groundedStickForce;
 
-            if (_jumpAction.WasPerformedThisFrame() && playerstats.DrainStamina(120f * Time.deltaTime))
+            if (_jumpAction.WasPerformedThisFrame() && playerstats.DrainStamina(20f))
             {
-                if (playerstats.stamina > 5)
                 _velocity.y = jumpSpeed;
             }
         }
@@ -90,14 +91,16 @@ public class SimplifiedFPSController : MonoBehaviour
         }
 
         if (_sprintAction.IsPressed() && _moveAction.IsPressed() && playerstats.DrainStamina(15f * Time.deltaTime))
-        {   
-            if (playerstats.stamina > 1)
-            moveSpeed = 12;
+        {
+            currentSpeed = SprintSpeed;
         }
         else
         {
-            moveSpeed = 6;
+            currentSpeed = moveSpeed;
         }
+
+        Vector3 move = (transform.right * moveInput.x + transform.forward * moveInput.y) * currentSpeed;
+
         Vector3 finalVelocity = new Vector3(move.x, _velocity.y, move.z);
         _cc.Move(finalVelocity * Time.deltaTime);
     }

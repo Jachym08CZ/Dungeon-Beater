@@ -12,13 +12,15 @@ public class PlayerStats : MonoBehaviour
     public float maxStamina = 100f;
     public bool StaminaIsdrained;
     public event Action OnStaminaChanged;
-    private Coroutine regenCoroutine;
+    private Coroutine _regenStaminaCoroutine;
 
     [Header("Magic")]
 
-    public float Mana = 10f;
-    public float maxMana = 10f;
+    public float Mana = 100f;
+    public float maxMana = 100f;
+    public bool ManaIsRegenerating;
     public event Action OnManaChanged;
+    private Coroutine _regenManaCoroutine;
 
     [Header("Currency")]
     public int Coins = 0;
@@ -26,34 +28,35 @@ public class PlayerStats : MonoBehaviour
     private void Start()
     {
         StaminaIsdrained = false;
+        ManaIsRegenerating = false;
+
+        OnManaChanged?.Invoke();
+        OnStaminaChanged?.Invoke();
     }
 
     private void Update()
     {
         if (StaminaIsdrained == false)
         {
-            AddStamina(0.5f);
+            AddStamina(5f * Time.deltaTime);
         }
-
-    }
-    private void LateUpdate()
-    {
-        if (StaminaIsdrained == true)
+        if (ManaIsRegenerating == true)
         {
-            if (regenCoroutine == null)
-            {
-                regenCoroutine = StartCoroutine(replenishStamina(3));
-            }
-        }
-
+            AddMana(25f * Time.deltaTime);
+        }    
     }
+
     public bool DrainStamina(float ammount)
     {
         if (stamina <= ammount) return false; 
 
         stamina -= ammount;
         OnStaminaChanged?.Invoke();
-        StopCoroutine(replenishStamina(3));
+        if (_regenStaminaCoroutine != null)
+        {
+            StopCoroutine(_regenStaminaCoroutine);
+        }
+        _regenStaminaCoroutine = StartCoroutine(replenishStamina(3));
         StaminaIsdrained = true;
         return true;
     }
@@ -61,21 +64,23 @@ public class PlayerStats : MonoBehaviour
     {
         if (stamina + ammount >= maxStamina) return;
         stamina += ammount;
-        OnStaminaChanged.Invoke();
+        OnStaminaChanged?.Invoke();
     }
 
     public IEnumerator replenishStamina(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
         StaminaIsdrained = false;
-        regenCoroutine = null;
+        _regenStaminaCoroutine = null;
     }
 
-    public void DrainMana(float ammount)
+    public bool DrainMana(float ammount)
     {
-        if (Mana <= ammount) return;
+        if (Mana <= ammount) return false;
+
         Mana -= ammount;
-        OnManaChanged.Invoke();
+        OnManaChanged?.Invoke();
+        return true;
     }
     public void AddMana(float ammount)
     {
@@ -86,7 +91,7 @@ public class PlayerStats : MonoBehaviour
     public void ChangeCoins(int ammount)
     {
         Coins += ammount;
-        //OnCoinsChanged?.Invoke();
+        OnCoinsChanged?.Invoke();
 
     }
 }
