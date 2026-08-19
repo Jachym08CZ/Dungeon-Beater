@@ -11,8 +11,10 @@ public class SimplifiedFPSController : MonoBehaviour
     private float currentSpeed;
 
     public float jumpSpeed = 8f;
+    public float currentJumpSpeed;
     public float gravity = 20f;
     public float groundedStickForce = 2f;
+    public bool grounded = false;
 
     [Header("Look")]
     public float mouseSensitivity = 0.1f;
@@ -45,6 +47,7 @@ public class SimplifiedFPSController : MonoBehaviour
 
         _sprintAction = InputSystem.actions.FindAction("Sprint");
 
+        currentJumpSpeed = jumpSpeed;
         if (playerCamera == null)
             Debug.LogWarning("Chybí reference na kameru");
     }
@@ -82,7 +85,7 @@ public class SimplifiedFPSController : MonoBehaviour
 
             if (_jumpAction.WasPerformedThisFrame() && playerstats.DrainStamina(20f))
             {
-                _velocity.y = jumpSpeed;
+                _velocity.y = currentJumpSpeed;
             }
         }
         else
@@ -99,9 +102,26 @@ public class SimplifiedFPSController : MonoBehaviour
             currentSpeed = moveSpeed;
         }
 
-        Vector3 move = (transform.right * moveInput.x + transform.forward * moveInput.y) * currentSpeed;
+        if (grounded == true)
+        {
+            currentSpeed = 0;
+            currentJumpSpeed = 0;
+        }
+        else
+        {
+            currentSpeed = moveSpeed;
+            currentJumpSpeed = jumpSpeed;
+        }
+
+            Vector3 move = (transform.right * moveInput.x + transform.forward * moveInput.y) * currentSpeed;
 
         Vector3 finalVelocity = new Vector3(move.x, _velocity.y, move.z);
         _cc.Move(finalVelocity * Time.deltaTime);
+    }
+
+    public void SetGrounded(bool state)
+    {
+        Debug.Log(state);
+        grounded = state;
     }
 }

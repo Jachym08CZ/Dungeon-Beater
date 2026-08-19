@@ -1,3 +1,4 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,7 +12,6 @@ public class PlayerTestingControls : MonoBehaviour
     InputAction _reload; // prozatím na R
 
     private bool _gunMode = false;
-    private bool _isMeditating = false;
     public GameObject SummoningCube;
 
     private void Awake()
@@ -26,7 +26,7 @@ public class PlayerTestingControls : MonoBehaviour
     }
     void Update()
     {
-        if (_LMB.WasPerformedThisFrame() && _playerstats.DrainMana(10f) && _isMeditating == false)
+        if (_LMB.WasPerformedThisFrame() && _playerstats.ManaIsRegenerating == false && _playerstats.DrainMana(10f) )
         {
             if (_gunMode == true)
             {
@@ -37,15 +37,22 @@ public class PlayerTestingControls : MonoBehaviour
                 SummonCube();
             }
         }
-        if (_crouch.WasPressedThisFrame() && _isMeditating == false)
+        if (_crouch.WasPressedThisFrame() && _playerstats.ManaIsRegenerating == false)
         {
-            Meditate();
+            if (_playercontroller.grounded == false)
+            {
+                Meditate();
+            }
         }
-        if (_crouch.WasPressedThisFrame() && _isMeditating == true)
+        if (_crouch.WasCompletedThisFrame() && _playerstats.ManaIsRegenerating == true)
         {
-            GetUp();
+            if (_playercontroller.grounded == true)
+            {
+                GetUp();
+            }
         }
-        if(_reload.WasPressedThisFrame())
+
+        if (_reload.WasPressedThisFrame())
         {
             _gunMode = !_gunMode;
         }
@@ -70,19 +77,20 @@ public class PlayerTestingControls : MonoBehaviour
     private void SummonCube()
     {
         GameObject clone = Instantiate
-            (SummoningCube, new Vector3(Player.transform.position.y * 2.0f, Player.transform.position.x, Player.transform.position.z), Quaternion.identity);
+            (SummoningCube, new Vector3(Player.transform.forward.x,10, Player.transform.forward.z), Quaternion.identity);
         Destroy(clone, 5);
     }
 
-    private void  Meditate()
+    private void Meditate()
     {
-        _playerstats.ManaIsRegenerating = true;
-        _playercontroller.enabled = false;
+        _playerstats.ManaRegenState(true);
+        _playercontroller.SetGrounded(true);
     }
+
 
     private void GetUp()
     {
-        _playercontroller.enabled = true;
-        _playerstats.ManaIsRegenerating = false;
+        _playerstats.ManaRegenState(false);
+        _playercontroller.SetGrounded(false);
     }
 }

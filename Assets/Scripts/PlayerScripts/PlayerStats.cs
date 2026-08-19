@@ -20,7 +20,6 @@ public class PlayerStats : MonoBehaviour
     public float maxMana = 100f;
     public bool ManaIsRegenerating;
     public event Action OnManaChanged;
-    private Coroutine _regenManaCoroutine;
 
     [Header("Currency")]
     public int Coins = 0;
@@ -29,9 +28,6 @@ public class PlayerStats : MonoBehaviour
     {
         StaminaIsdrained = false;
         ManaIsRegenerating = false;
-
-        OnManaChanged?.Invoke();
-        OnStaminaChanged?.Invoke();
     }
 
     private void Update()
@@ -87,6 +83,12 @@ public class PlayerStats : MonoBehaviour
         if (Mana >= maxMana) return;
         Mana += ammount;
         OnManaChanged?.Invoke();
+    }
+
+    public void ManaRegenState(bool state)
+    {
+        Debug.Log(state);
+        ManaIsRegenerating = state;
     }
     public void ChangeCoins(int ammount)
     {

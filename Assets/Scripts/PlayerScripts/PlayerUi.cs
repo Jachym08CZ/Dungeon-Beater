@@ -22,6 +22,9 @@ public class PlayerUi : MonoBehaviour
     [Header("Stamina")]
     public Slider ManaSlider;
 
+    [Header("Coins")]
+    public TMP_Text CoinsText;
+
     [SerializeField] private PlayerLevel playerLevel;
     [SerializeField] private BaseHealthScript baseHealth;
     [SerializeField] private PlayerStats playerstats;
@@ -33,6 +36,13 @@ public class PlayerUi : MonoBehaviour
         baseHealth.OnHealthChange += RefreshHealth;
         playerstats.OnStaminaChanged += RefreshStamina;
         playerstats.OnManaChanged += RefreshMana;
+        playerstats.OnCoinsChanged += RefreshCoins;
+
+        RefreshXp();
+        RefreshLevel();
+        RefreshStamina();
+        RefreshMana();
+        RefreshCoins();
     }
     private void RefreshXp()
     {
@@ -62,5 +72,10 @@ public class PlayerUi : MonoBehaviour
     {
         ManaSlider.value = playerstats.Mana;
         ManaSlider.maxValue = playerstats.maxMana;
+    }
+
+    private void RefreshCoins()
+    {
+        CoinsText.text = "Coins: " + playerstats.Coins;
     }
 }
