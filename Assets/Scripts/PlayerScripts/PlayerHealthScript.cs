@@ -7,6 +7,7 @@ public class PlayerHealthScript  : BaseHealthScript
 {
 
     private Coroutine deathCor;
+    [SerializeField] private PlayerLevel playerLevel;
     public override void Start()
     {
         base.Start();

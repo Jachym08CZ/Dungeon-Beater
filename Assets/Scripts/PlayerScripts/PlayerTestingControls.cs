@@ -1,4 +1,3 @@
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -76,8 +75,10 @@ public class PlayerTestingControls : MonoBehaviour
     }
     private void SummonCube()
     {
+        Vector3 spawnPos = Player.transform.position + Player.transform.forward * 3f + Vector3.up * 3f;
+
         GameObject clone = Instantiate
-            (SummoningCube, new Vector3(Player.transform.forward.x,10, Player.transform.forward.z), Quaternion.identity);
+            (SummoningCube, spawnPos, Quaternion.identity);
         Destroy(clone, 5);
     }
 

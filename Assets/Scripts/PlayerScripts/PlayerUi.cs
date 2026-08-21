@@ -43,6 +43,7 @@ public class PlayerUi : MonoBehaviour
         RefreshStamina();
         RefreshMana();
         RefreshCoins();
+        RefreshHealth();
     }
     private void RefreshXp()
     {

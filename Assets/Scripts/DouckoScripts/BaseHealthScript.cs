@@ -1,7 +1,5 @@
 using System;
-using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
-using UnityEngine.UI;
 public class BaseHealthScript : MonoBehaviour, IDamageable
 {
     public float CurrenthHealth;
@@ -12,6 +10,7 @@ public class BaseHealthScript : MonoBehaviour, IDamageable
     public virtual void Start()
     {
         CurrenthHealth = MaxHealth;
+        ChangeHealth(0);
 
         //DeathAction += GameManager.Instance.Restart;
     }
