@@ -30,6 +30,12 @@ public class BaseHealthScript : MonoBehaviour, IDamageable
 
     public virtual void ChangeHealth(int dmg)
     {
+        if (CurrenthHealth + dmg > MaxHealth)
+        {
+            CurrenthHealth = MaxHealth;
+            OnHealthChange?.Invoke();
+            return;
+        }    
         CurrenthHealth += dmg;
         OnHealthChange?.Invoke();
     }

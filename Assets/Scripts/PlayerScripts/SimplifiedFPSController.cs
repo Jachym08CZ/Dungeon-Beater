@@ -113,7 +113,7 @@ public class SimplifiedFPSController : MonoBehaviour
         }
 
             Vector3 move = (transform.right * moveInput.x + transform.forward * moveInput.y) * currentSpeed;
-
+        
         Vector3 finalVelocity = new Vector3(move.x, _velocity.y, move.z);
         _cc.Move(finalVelocity * Time.deltaTime);
     }

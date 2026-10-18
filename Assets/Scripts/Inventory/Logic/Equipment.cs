@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Equipment : MonoBehaviour
@@ -39,13 +40,8 @@ public class Equipment : MonoBehaviour
         return RemovedItem;
     }
 
-    public float GetTotallDamageBonus()
-    {
-        float totalbonus = 0;
-        foreach (Item i in equipped.Values)
-        {
-            totalbonus += i.DamageBonus;
-        }
-        return totalbonus;
-    }
+    public float TotalDamageBonus => equipped.Values.Sum(i => i.DamageBonus);
+    public float TotalManaBonus => equipped.Values.Sum(i => i.ManaRestore);
+    public float TotalHealthBonus => equipped.Values.Sum(i => i.HealthRestore);
+
 }

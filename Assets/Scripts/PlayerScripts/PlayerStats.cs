@@ -80,7 +80,12 @@ public class PlayerStats : MonoBehaviour
     }
     public void AddMana(float ammount)
     {
-        if (Mana >= maxMana) return;
+        if (Mana + ammount > maxMana)
+        {
+            Mana = maxMana;
+            OnManaChanged?.Invoke();
+            return;
+        }
         Mana += ammount;
         OnManaChanged?.Invoke();
     }

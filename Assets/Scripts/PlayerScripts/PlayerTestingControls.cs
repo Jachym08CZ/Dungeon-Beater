@@ -6,10 +6,13 @@ public class PlayerTestingControls : MonoBehaviour
     SimplifiedFPSController _playercontroller;
     PlayerStats _playerstats;
     GameObject Player;
+    [SerializeField] GameObject _inventory;
     InputAction _LMB;
     InputAction _crouch; // pozor zmìna z C na levý controll
     InputAction _reload; // prozatím na R
+    InputAction _openInventory;
 
+    private bool canPerform = true;
     private bool _gunMode = false;
     public GameObject SummoningCube;
 
@@ -22,39 +25,46 @@ public class PlayerTestingControls : MonoBehaviour
         _LMB = InputSystem.actions.FindAction("Attack");
         _crouch = InputSystem.actions.FindAction("Crouch");
         _reload = InputSystem.actions.FindAction("Reload");
+        _openInventory = InputSystem.actions.FindAction("OpenInventory");
     }
     void Update()
     {
-        if (_LMB.WasPerformedThisFrame() && _playerstats.ManaIsRegenerating == false && _playerstats.DrainMana(10f) )
+        if (canPerform == true)
         {
-            if (_gunMode == true)
+            if (_LMB.WasPerformedThisFrame() && _playerstats.ManaIsRegenerating == false && _playerstats.DrainMana(10f))
             {
-                ShootRayCast();
+                if (_gunMode == true)
+                {
+                    ShootRayCast();
+                }
+                else
+                {
+                    SummonCube();
+                }
             }
-            else
+            if (_crouch.WasPressedThisFrame() && _playerstats.ManaIsRegenerating == false)
             {
-                SummonCube();
+                if (_playercontroller.grounded == false)
+                {
+                    Meditate();
+                }
             }
-        }
-        if (_crouch.WasPressedThisFrame() && _playerstats.ManaIsRegenerating == false)
-        {
-            if (_playercontroller.grounded == false)
+            if (_crouch.WasCompletedThisFrame() && _playerstats.ManaIsRegenerating == true)
             {
-                Meditate();
+                if (_playercontroller.grounded == true)
+                {
+                    GetUp();
+                }
             }
-        }
-        if (_crouch.WasCompletedThisFrame() && _playerstats.ManaIsRegenerating == true)
-        {
-            if (_playercontroller.grounded == true)
-            {
-                GetUp();
-            }
-        }
 
-        if (_reload.WasPressedThisFrame())
-        {
-            _gunMode = !_gunMode;
+            if (_reload.WasPressedThisFrame())
+            {
+                _gunMode = !_gunMode;
+            }
         }
+        
+        if (_openInventory.WasPressedThisFrame()) { ShowInventory(); }
+
     }
 
     private void ShootRayCast()
@@ -94,4 +104,12 @@ public class PlayerTestingControls : MonoBehaviour
         _playerstats.ManaRegenState(false);
         _playercontroller.SetGrounded(false);
     }
+
+    private void ShowInventory()
+    {
+        _playercontroller.enabled = !_playercontroller.enabled;
+        _inventory.SetActive(!_inventory.activeSelf);
+        canPerform = !canPerform;
+    }
+    // pridat item
 }

@@ -10,7 +10,7 @@ public class Inventory : MonoBehaviour
 
     public IReadOnlyList<Item> Items
     {
-        get { return Items; }
+        get { return _items; }
     }
 
     //Pridej Item
