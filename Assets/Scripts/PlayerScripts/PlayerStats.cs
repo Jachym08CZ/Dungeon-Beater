@@ -92,7 +92,6 @@ public class PlayerStats : MonoBehaviour
 
     public void ManaRegenState(bool state)
     {
-        Debug.Log(state);
         ManaIsRegenerating = state;
     }
     public void ChangeCoins(int ammount)

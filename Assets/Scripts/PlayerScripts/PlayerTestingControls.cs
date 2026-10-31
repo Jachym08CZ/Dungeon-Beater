@@ -6,11 +6,9 @@ public class PlayerTestingControls : MonoBehaviour
     SimplifiedFPSController _playercontroller;
     PlayerStats _playerstats;
     GameObject Player;
-    [SerializeField] GameObject _inventory;
     InputAction _LMB;
     InputAction _crouch; // pozor zmìna z C na levý controll
     InputAction _reload; // prozatím na R
-    InputAction _openInventory;
 
     private bool canPerform = true;
     private bool _gunMode = false;
@@ -25,7 +23,6 @@ public class PlayerTestingControls : MonoBehaviour
         _LMB = InputSystem.actions.FindAction("Attack");
         _crouch = InputSystem.actions.FindAction("Crouch");
         _reload = InputSystem.actions.FindAction("Reload");
-        _openInventory = InputSystem.actions.FindAction("OpenInventory");
     }
     void Update()
     {
@@ -63,7 +60,6 @@ public class PlayerTestingControls : MonoBehaviour
             }
         }
         
-        if (_openInventory.WasPressedThisFrame()) { ShowInventory(); }
 
     }
 
@@ -105,11 +101,6 @@ public class PlayerTestingControls : MonoBehaviour
         _playercontroller.SetGrounded(false);
     }
 
-    private void ShowInventory()
-    {
-        _playercontroller.enabled = !_playercontroller.enabled;
-        _inventory.SetActive(!_inventory.activeSelf);
-        canPerform = !canPerform;
-    }
+
     // pridat item
 }

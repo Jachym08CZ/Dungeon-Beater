@@ -91,7 +91,7 @@ public class SimplifiedFPSController : MonoBehaviour
         {
             _velocity.y -= gravity * Time.deltaTime;
         }
-
+        // Sprint
         if (_sprintAction.IsPressed() && _moveAction.IsPressed() && playerstats.DrainStamina(15f * Time.deltaTime))
         {
             currentSpeed = SprintSpeed;
@@ -120,7 +120,6 @@ public class SimplifiedFPSController : MonoBehaviour
 
     public void SetGrounded(bool state)
     {
-        Debug.Log(state);
         grounded = state;
     }
 }
