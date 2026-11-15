@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8b712d93314be43b0894d59dfb5caa, type: 3}
   m_Name: Test1
   m_EditorClassIdentifier: Assembly-CSharp::Item
+  WorldPrefab: {fileID: 0}
   Name: Burger
   Icon: {fileID: 0}
   price: 0

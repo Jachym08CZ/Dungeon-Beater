@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ItemPickUp : MonoBehaviour, IInteractable
@@ -16,5 +15,10 @@ public class ItemPickUp : MonoBehaviour, IInteractable
         if (_inventory == null) return;
         _inventory.AddItem(_item);
         Destroy(this.gameObject);
+    }
+
+    public void SetItem(Item item)
+    {
+        _item = item;
     }
 }

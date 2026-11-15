@@ -17,7 +17,8 @@ public enum EquipSlot
 public class Item : ScriptableObject
 {
     [Header("Basic Informations")]
-    
+
+    public GameObject WorldPrefab;
     public string Name;
     public Sprite Icon;
     public int price;

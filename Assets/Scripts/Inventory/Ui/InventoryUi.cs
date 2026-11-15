@@ -58,6 +58,6 @@ public class InventoryUi : MonoBehaviour
     
     public void HandleDropClicked(Item item)
     {
-        _currentInventory.RemoveItem(item);
+        _inventoryController.DropItem(item);
     }
 }
