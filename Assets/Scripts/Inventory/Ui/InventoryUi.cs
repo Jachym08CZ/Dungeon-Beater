@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class InventoryUi : MonoBehaviour
@@ -8,16 +9,30 @@ public class InventoryUi : MonoBehaviour
 
     private Inventory _currentInventory;
 
-    private void Start()
+    [SerializeField] private bool IsContainterPanel;
+
+    private void OnEnable()
     {
-        ShowInventory(_inventoryController.GetComponent<Inventory>());
+        if (!IsContainterPanel)
+        {
+            _currentInventory = _inventoryController.GetComponent<Inventory>();
+        }
+        if (_currentInventory == null) return;
+        _currentInventory.OnInventoryChange += RefreshList;
+        RefreshList();
+    }
+    private void OnDisable()
+    {
+        if(_currentInventory != null)
+        {
+            _currentInventory.OnInventoryChange -= RefreshList;
+        }
     }
     //ShowInvenotory
     public void ShowInventory(Inventory target)
     {
         if(_currentInventory != null)
         {
-
             _currentInventory.OnInventoryChange -= RefreshList;
         }
 
@@ -41,23 +56,25 @@ public class InventoryUi : MonoBehaviour
         }
     }
 
-    
-    private void OnDestroy()
-    {
-        if(_currentInventory != null)
-        {
-            _currentInventory.OnInventoryChange -= RefreshList;
-        }
-        
-    }
-
     public void HandleSlotClicked(Item item)
     {
-        _inventoryController.UseItem(item);
+        if (IsContainterPanel)
+        {
+            _inventoryController.TakeFromContainer(item);
+        }
+        else
+        {
+            _inventoryController.UseItem(item);
+        }
     }
     
     public void HandleDropClicked(Item item)
     {
         _inventoryController.DropItem(item);
+    }
+
+    public void SetInventory(Inventory targetInventory)
+    {
+        _currentInventory = targetInventory;
     }
 }

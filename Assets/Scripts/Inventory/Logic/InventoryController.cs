@@ -21,6 +21,11 @@ public class InventoryController : MonoBehaviour
     //useItem
     public void UseItem(Item item)
     {
+        if (_openedContainer != null)
+        {
+            MoveItem(item, _inventory, _openedContainer.Inventory);
+            return;
+        }
         if (item.kind == ItemKind.Equippable)
         {
             EquipItem(item);
@@ -101,7 +106,10 @@ public class InventoryController : MonoBehaviour
     // Take Item From Container
     public void TakeFromContainer(Item item)
     {
-        MoveItem(item, _openedContainer.Inventory, _inventory);
+        if (_openedContainer != null)
+        {
+            MoveItem(item, _openedContainer.Inventory, _inventory);
+        }
     }
 
     // Move Item 
